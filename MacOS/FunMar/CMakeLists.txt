@@ -1,0 +1,4 @@
+add_subdirectory(FunMarCore)
+add_subdirectory(FunMarAntlrTree)
+add_subdirectory(FunMarContainers)
+
