@@ -44,3 +44,6 @@ ard {
     "#"last -> mal(last);
 }
 
+main {
+    a -> ard(a);
+}
