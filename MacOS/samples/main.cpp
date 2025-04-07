@@ -34,17 +34,17 @@ int main(int argc, char* argv[]) {
     
     std::cout<<"COMPILED!" << std::endl;
     
-    Statements mal = functions[(Variable)"ard"];
+    Statements mal = functions[(Variable)"mal"];
     Statements::Iterator iter = mal.begin();
     for (;iter.isAtList(); iter.next()) {
         if (iter.isRule()) {
-            std::cout << iter.getRule().getInput().getStringRepresentation() << "->" << iter.getRule().getOutput().getStringRepresentation() << std::endl;
+            std::cout << iter.getRule().getStringRepresentation() << std::endl;
         }
         else {
             Scheme::Iterator schIter = iter.getSchemeBegin();
             std::cout << "SCHEME {" << std::endl;
             for (; schIter.isAtList(); schIter.next()) {
-                std::cout << schIter.getRule().getInput().getStringRepresentation() << "->" << schIter.getRule().getOutput().getStringRepresentation() << std::endl;
+                std::cout << schIter.getRule().getStringRepresentation() << std::endl;
             }
             std::cout << "}" << std::endl;
         }

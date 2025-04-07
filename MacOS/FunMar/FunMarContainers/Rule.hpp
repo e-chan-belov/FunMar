@@ -18,6 +18,8 @@ public:
     
     Abstraction getInput() { return input; }
     FunctionAbstraction getOutput() { return output; }
+
+    std::string getStringRepresentation() { return input.getStringRepresentation() + (terminal ? "=>" : "->") + output.getStringRepresentation(); }
 };
 
 class Scheme : public FunMarList<Rule> { 

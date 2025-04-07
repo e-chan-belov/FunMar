@@ -10,7 +10,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-include_directories(/opt/homebrew/Cellar/antlr4-cpp-runtime/4.13.2/include/antlr4-runtime)
+include_directories(antlr4-runtime)
 link_directories(/opt/homebrew/lib)
 
 find_package(antlr4-runtime REQUIRED)
