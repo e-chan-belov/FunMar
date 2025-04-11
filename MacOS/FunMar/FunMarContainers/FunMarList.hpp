@@ -37,7 +37,7 @@ public:
     }
     FunMarList(FunMarList&& obj) : head(obj.head) { obj.head = nullptr; }
     
-    FunMarList<T> operator=(const FunMarList<T>& obj) {
+    FunMarList<T>& operator=(const FunMarList<T>& obj) {
         if (this != &obj) {
             while (head != nullptr) {
                 FunMarListNode<T>* next = head->next;
@@ -55,7 +55,7 @@ public:
         }
         return *this;
     }
-    FunMarList<T> operator=(FunMarList<T>&& obj) {
+    FunMarList<T>& operator=(FunMarList<T>&& obj) noexcept {
         if (this != &obj) {
             while (head != nullptr) {
                 FunMarListNode<T>* next = head->next;

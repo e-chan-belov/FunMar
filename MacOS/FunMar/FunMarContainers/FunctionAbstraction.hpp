@@ -12,8 +12,8 @@ public:
     Function(const Function& obj) : var(obj.var), argument(obj.argument) {}
     Function(Function&& obj) : var(obj.var), argument(std::move(obj.argument)) {}
     
-    Function operator=(const Function& obj);
-    Function operator=(Function&& obj);
+    Function& operator=(const Function& obj);
+    Function& operator=(Function&& obj) noexcept;
     
     ~Function() {}
     

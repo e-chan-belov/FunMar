@@ -1,5 +1,21 @@
 #include "FunctionAbstraction.hpp"
 
+Function& Function::operator=(const Function& obj) {
+    if (this != &obj) {
+        var = obj.var;
+        argument = obj.argument;
+    }
+    return *this;
+}
+
+Function& Function::operator=(Function&& obj) noexcept {
+    if (this != &obj) {
+        var = std::move(obj.var);
+        argument = std::move(obj.argument);
+    }
+    return *this;
+}
+
 void FunctionAbstraction::Iterator::merge() {
     if (!isWord()) { return; }
     Word tmp = "";

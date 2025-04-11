@@ -12,7 +12,11 @@ protected:
     bool terminal;
 public:
     Rule(const Abstraction& input_, const FunctionAbstraction& output_, bool term) : input(input_), output(output_), terminal(term) {}
-    Rule(Abstraction&& input_, FunctionAbstraction&& output_, bool term) : input(input_), output(output_), terminal(term) {}
+    Rule(const Rule& rule) : input(rule.input), output(rule.output), terminal(rule.terminal) {}
+    Rule(Rule&& rule) : input(std::move(rule.input)), output(std::move(rule.output)), terminal(rule.terminal) {}
+
+    Rule& operator=(const Rule& rule);
+    Rule& operator=(Rule&& rule) noexcept;
     
     ~Rule() {}
     

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Rule.hpp"
+#include <stack>
 
 struct InputRealization {
     size_t begin;
@@ -17,10 +18,16 @@ public:
     PartialAbstraction(InputRealization input, const FunctionAbstraction& abs) : inputRealization(input), abstraction(abs) {}
     PartialAbstraction(InputRealization input, FunctionAbstraction&& abs) : inputRealization(input), abstraction(std::move(abs)) {}
 
+    bool isActive() { return callFunctionIterator.isAtList(); }
+
     FunctionAbstraction::Iterator begin() { return abstraction.begin(); }
 
     void setFunctionIterator(FunctionAbstraction::Iterator callFunctionIterator_) { callFunctionIterator = callFunctionIterator_; }
     FunctionAbstraction::Iterator getFunctionIterator() { return callFunctionIterator; }
+
+    bool isRealized() { return abstraction.isRealized(); }
+
+    void dispose();
 };
 
 
@@ -33,10 +40,16 @@ protected:
 
     PartialAbstraction partialAbstraction;
     Word word;
-public:
-    Environment(Statements::Iterator stmt, Word wrd) : statementsIterator(stmt), word(wrd) {}
 
-    bool isPartiallyAbstract();
+    bool main;
+public:
+    Environment() = default;
+    Environment(Statements::Iterator stmt, const Word& wrd, bool main_ = false) : statementsIterator(stmt), word(wrd), main(main_){}
+
+    Environment operator=(const Environment& env);
+    Environment operator=(Environment&& env);
+
+    bool isPartiallyAbstract() { return partialAbstraction.isActive(); }
     bool isSchemeActive() { return schemeIterator.isAtList(); }
     bool isFunctionActive() { return statementsIterator.isAtList(); }
 
@@ -54,4 +67,29 @@ public:
 
     PartialAbstraction& getPartialAbstraction();
     Word& getWord() { return word; }
+
+    bool isMain() { return main; }
+};
+
+class EnvironmentStreams {
+protected:
+    std::stack<Environment> envs;
+    Environment current;
+public:
+    EnvironmentStreams() = default;
+    EnvironmentStreams(Statements::Iterator stmt) { current = Environment(stmt, "", true); }
+
+    void init(const Word& wrd) { current.getWord() = wrd; }
+
+    void push(Statements::Iterator stmt, const Word& wrd) { 
+        envs.push(current);
+        current = Environment(stmt, wrd);
+    }
+    void pop() {
+        current = envs.top();
+        envs.pop();
+    }
+    Environment& top() { return current; }
+
+    Environment& getReference() { return current; }
 };
