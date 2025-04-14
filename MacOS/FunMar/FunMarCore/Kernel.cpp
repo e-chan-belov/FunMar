@@ -1,4 +1,6 @@
-#include "Kernel.h"
+#include "Kernel.hpp"
+#include "Environment.h"
+#include "DecisionManager.h"
 
 Kernel::Kernel(const std::unordered_map<Variable, Statements>& task) : functions(task),
     envs(functions[(Variable)"main"].begin()), //todo

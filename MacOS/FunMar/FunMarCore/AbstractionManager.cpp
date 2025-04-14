@@ -11,6 +11,8 @@
 //     return true;
 // }
 
+AbstractionManager::AbstractionManager(EnvironmentManager& environmentManager_, Environment& current_, std::unordered_map<Variable, Statements>& funcs) : environmentManager(environmentManager_), current(current_), functions(funcs) {}
+
 bool AbstractionManager::tryRealzingRule(const Rule& rule) {
     Word& currentWord = current.getWord();
     std::unordered_map<Variable, Word> vars;
@@ -18,7 +20,7 @@ bool AbstractionManager::tryRealzingRule(const Rule& rule) {
     Variable var;
     prev.begin = 0; prev.size = 0;
     InputRealization ans = prev;
-    for (const Abstraction::Iterator iter = rule.getInput().begin(); iter.isAtList(); iter.next()) {
+    for (Abstraction::Iterator iter = rule.getInput().begin(); iter.isAtList(); iter.next()) {
         if (iter.isWord()) { // произойдёт максимум один раз
             prev.size = iter.getWord().size();
             prev.begin = currentWord.find(iter.getWord());

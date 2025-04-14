@@ -52,7 +52,7 @@ public:
 
         bool isAtList() const {return current.isAtList(); }
         bool hasNext() const { return current.hasNext(); }
-        void next() const { previous = current; current.next(); }
+        void next() { previous = current; current.next(); }
 
         bool isWord() const { return std::holds_alternative<Word>(current.getValue());}
         bool isVariable() const { return std::holds_alternative<Variable>(current.getValue());}

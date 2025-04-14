@@ -49,8 +49,8 @@ public:
     Environment() = default;
     Environment(Statements::Iterator stmt, const Word& wrd, bool main_ = false) : statementsIterator(stmt), word(wrd), main(main_){}
 
-    Environment operator=(const Environment& env);
-    Environment operator=(Environment&& env);
+    Environment& operator=(const Environment& env);
+    //Environment operator=(Environment&& env);
 
     bool isPartiallyAbstract() { return partialAbstraction.isActive(); }
     bool isSchemeActive() { return schemeIterator.isAtList(); }

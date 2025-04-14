@@ -8,7 +8,7 @@ protected:
     Environment& current;
     std::unordered_map<Variable, Statements>& functions;
 public:
-    AbstractionManager(EnvironmentManager& environmentManager_, Environment& current_,  const std::unordered_map<Variable, Statements>& funcs);
+    AbstractionManager(EnvironmentManager& environmentManager_, Environment& current_, std::unordered_map<Variable, Statements>& funcs);
 
     ~AbstractionManager() = default;
 

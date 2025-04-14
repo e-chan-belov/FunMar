@@ -87,7 +87,7 @@ public:
         
         bool isAtList() const { return pointer != nullptr; }
         bool hasNext() const { return pointer->next != nullptr; }
-        void next() const { pointer = pointer->next; }
+        void next() { pointer = pointer->next; }
         
         T& getValue() { return pointer->getValue(); }
         const T& getValue() const { return pointer->getValue(); }
