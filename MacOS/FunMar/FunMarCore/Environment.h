@@ -5,7 +5,7 @@
 
 struct InputRealization {
     size_t begin;
-    size_t end;
+    size_t size;
 };
 
 class PartialAbstraction {
@@ -26,8 +26,11 @@ public:
     FunctionAbstraction::Iterator getFunctionIterator() { return callFunctionIterator; }
 
     bool isRealized() { return abstraction.isRealized(); }
+    Word getRealization() { return abstraction.getRealization(); }
 
-    void dispose();
+    InputRealization getInputRealization() { return inputRealization; }
+
+    void dispose() { callFunctionIterator = FunctionAbstraction::Iterator(nullptr); }
 };
 
 
@@ -65,8 +68,11 @@ public:
     const Rule& getFunctionRule() { return statementsIterator.getRule(); }
     void activateScheme() {schemeIterator = schemeIteratorBegin = statementsIterator.getSchemeBegin(); } 
 
-    PartialAbstraction& getPartialAbstraction();
+    PartialAbstraction& getPartialAbstraction() { return partialAbstraction; }
+    const PartialAbstraction& getPartialAbstraction() const { return partialAbstraction; }
+
     Word& getWord() { return word; }
+    const Word& getWord() const { return word; }
 
     bool isMain() { return main; }
 };

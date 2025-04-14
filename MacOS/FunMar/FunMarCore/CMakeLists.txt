@@ -5,7 +5,8 @@ link_directories(/opt/homebrew/lib)
 
 find_package(antlr4-runtime REQUIRED)
 
-set(SOURCE_LIB FunMarCompiler.cpp)
+set(SOURCE_LIB FunMarCompiler.cpp
+		Kernel.cpp)
 
 add_library(FunMarCore STATIC ${SOURCE_LIB})
 

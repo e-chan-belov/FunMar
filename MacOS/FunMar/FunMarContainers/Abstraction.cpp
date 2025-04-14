@@ -21,7 +21,7 @@ void Abstraction::Iterator::merge() {
     getWord() = tmp;
 }
 
-std::string Abstraction::getStringRepresentation() {
+std::string Abstraction::getStringRepresentation() const {
     std::string ans = "";
     for (Abstraction::Iterator iter = begin(); iter.isAtList(); iter.next()) {
         if (iter.isWord()) {

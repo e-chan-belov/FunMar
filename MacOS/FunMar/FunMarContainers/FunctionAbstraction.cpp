@@ -37,7 +37,7 @@ void FunctionAbstraction::Iterator::merge() {
     getWord() = tmp;
 }
 
-std::string FunctionAbstraction::getStringRepresentation() {
+std::string FunctionAbstraction::getStringRepresentation() const {
     std::string ans = "";
     for (FunctionAbstraction::Iterator iter = begin(); iter.isAtList(); iter.next()) {
         if (iter.isWord()) {

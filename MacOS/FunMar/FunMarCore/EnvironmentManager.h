@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Environment.h"
+
 class EnvironmentManager {
 protected:
     EnvironmentStreams& envs;

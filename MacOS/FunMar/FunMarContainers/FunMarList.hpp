@@ -7,7 +7,7 @@ public:
     T value;
 public:
     
-    FunMarListNode(T value_, FunMarListNode<T>* next_ = nullptr) : next(next_), value(value_) {}
+    FunMarListNode(T value_ = T{}, FunMarListNode<T>* next_ = nullptr) : next(next_), value(value_) {}
     FunMarListNode(const FunMarListNode<T>& node) : next(nullptr), value(node.value) {}
     
     ~FunMarListNode() {}
@@ -69,8 +69,9 @@ public:
     }
     
     ~FunMarList() {
+        FunMarListNode<T>* next;
         while (head != nullptr) {
-            FunMarListNode<T>* next = head->next;
+            next = head->next;
             delete head;
             head = next;
         }
@@ -82,15 +83,18 @@ public:
     public:
         Iterator(FunMarListNode<T>* head_ = nullptr) : pointer(head_) {}
         Iterator operator=(const Iterator& iter) { pointer = iter.pointer; return *this; }
+        const Iterator operator=(const Iterator& iter) const { pointer = iter.pointer; return *this; }
         
-        bool isAtList() { return pointer != nullptr; }
-        bool hasNext() { return pointer->next != nullptr; }
-        void next() { pointer = pointer->next; }
+        bool isAtList() const { return pointer != nullptr; }
+        bool hasNext() const { return pointer->next != nullptr; }
+        void next() const { pointer = pointer->next; }
         
         T& getValue() { return pointer->getValue(); }
+        const T& getValue() const { return pointer->getValue(); }
     };
     
     Iterator begin() { return Iterator(head); }
+    const Iterator begin() const { return Iterator(head); }
 };
 
 template <class T>

@@ -20,8 +20,11 @@ public:
     
     ~Rule() {}
     
-    Abstraction getInput() { return input; }
-    FunctionAbstraction getOutput() { return output; }
+    const Abstraction& getInput() const { return input; }
+    Abstraction& getInput() { return input; }
+
+    const FunctionAbstraction& getOutput() const { return output; }
+    FunctionAbstraction& getOutput() { return output; }
 
     std::string getStringRepresentation() { return input.getStringRepresentation() + (terminal ? "=>" : "->") + output.getStringRepresentation(); }
 };

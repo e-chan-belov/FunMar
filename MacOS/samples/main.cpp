@@ -6,6 +6,7 @@
 #include "FunMarParser.h"
 #include "Abstraction.hpp"
 #include "Rule.hpp"
+#include "Kernel.hpp"
 
 using namespace antlr4;
 
@@ -49,11 +50,14 @@ int main(int argc, char* argv[]) {
             std::cout << "}" << std::endl;
         }
     }
+    Word word;
+    std::cout << "Enter your word" << std::endl;
+    std::cin >> word;
+    Kernel kernel(functions);
     
-    //iter.next();
-    //iter.next();
+    std::cout << "Answer:" << std::endl;
+    std::cout << kernel.execute(word) << std::endl;
     
-    //std::cout << iter.getRule().getInput().getStringRepresentation() << "->" << iter.getRule().getOutput().getStringRepresentation() << std::endl;
     return 0;
 }
 

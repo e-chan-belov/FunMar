@@ -40,25 +40,31 @@ public:
     public:
         Iterator(FunMarListNode<std::variant<Word, Variable, Function>>* head_ = nullptr) : previous(nullptr), current(head_) {}
 
-        bool isAtList() {return current.isAtList(); }
-        bool hasNext() { return current.hasNext(); }
-        void next() { previous = current; current.next(); }
+        bool isAtList() const {return current.isAtList(); }
+        bool hasNext() const { return current.hasNext(); }
+        void next() const { previous = current; current.next(); }
 
-        bool isWord() { return std::holds_alternative<Word>(current.getValue());}
-        bool isVariable() { return std::holds_alternative<Variable>(current.getValue());}
-        bool isFunction() { return std::holds_alternative<Function>(current.getValue());}
+        bool isWord() const { return std::holds_alternative<Word>(current.getValue());}
+        bool isVariable() const { return std::holds_alternative<Variable>(current.getValue());}
+        bool isFunction() const { return std::holds_alternative<Function>(current.getValue());}
 
         Word& getWord() { return std::get<Word>(current.getValue()); }
+        const Word& getWord() const { return std::get<Word>(current.getValue()); }
+
         Variable& getVariable() { return std::get<Variable>(current.getValue()); }
+        const Variable& getVariable() const { return std::get<Variable>(current.getValue()); }
+
         Function& getFunction() { return std::get<Function>(current.getValue()); }
+        const Function& getFunction() const { return std::get<Function>(current.getValue()); }
 
         void realize(Word result) { current.getValue() = result; }
         void merge();
     };
     
     Iterator begin() { return Iterator(head); }
+    const Iterator begin() const { return Iterator(head); }
     
-    std::string getStringRepresentation();
+    std::string getStringRepresentation() const;
 };
 
 class FunctionAbstractionGenerator : public FunMarListGenerator<std::variant<Word, Variable, Function>> {
