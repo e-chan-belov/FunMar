@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "FunctionAbstraction.hpp"
 #include "FunMarList.hpp"
 
@@ -20,13 +19,17 @@ public:
     
     ~Rule() {}
     
-    const Abstraction& getInput() const { return input; }
     Abstraction& getInput() { return input; }
+    const Abstraction& getInput() const { return input; }
 
-    const FunctionAbstraction& getOutput() const { return output; }
+    void setInput(const Abstraction& input_) { input = input_; }
+
     FunctionAbstraction& getOutput() { return output; }
+    const FunctionAbstraction& getOutput() const { return output; }
 
-    std::string getStringRepresentation() { return input.getStringRepresentation() + (terminal ? "=>" : "->") + output.getStringRepresentation(); }
+    void setOutput(const FunctionAbstraction& output_) { output = output_; }
+
+    std::string getStringRepresentation() const { return input.getStringRepresentation() + (terminal ? "=>" : "->") + output.getStringRepresentation(); }
 };
 
 class Scheme : public FunMarList<Rule> { 
@@ -35,17 +38,16 @@ public:
     Scheme(const FunMarList<Rule>& list) : FunMarList(list) {}
     Scheme(FunMarList<Rule>&& list) : FunMarList(std::move(list)) {}
 
-    class Iterator : public FunMarList<Rule>::Iterator {
+    class Iterator : public FunMarList<Rule>::ObserverIterator {
     public:
-        using FunMarList<Rule>::Iterator::Iterator;
+        using FunMarList<Rule>::ObserverIterator::ObserverIterator;
 
-        Rule& getRule() { return getValue(); }
+        const Rule& getRule() const { return getValue(); }
     };
 
-    Iterator begin() { return Iterator(head); }
+    Iterator begin() const { return Iterator(head); }
 };
 
-// fix this generator
 class SchemeGenerator : public FunMarListGenerator<Rule> { 
 public:
     using FunMarListGenerator<Rule>::FunMarListGenerator; 
@@ -58,22 +60,21 @@ public:
     Statements(const FunMarList<std::variant<Rule, Scheme>>& list) : FunMarList(list) {}
     Statements(FunMarList<std::variant<Rule, Scheme>>&& list) : FunMarList(std::move(list)) {}
 
-    class Iterator : public FunMarList<std::variant<Rule, Scheme>>::Iterator {
+    class Iterator : public FunMarList<std::variant<Rule, Scheme>>::ObserverIterator {
     public:
-        using FunMarList<std::variant<Rule, Scheme>>::Iterator::Iterator;
+        using FunMarList<std::variant<Rule, Scheme>>::ObserverIterator::ObserverIterator;
         
         bool isRule() { return std::holds_alternative<Rule>(getValue()); }
         bool isScheme() { return !isRule(); }
         
-        Rule& getRule() { return std::get<Rule>(getValue()); }
-        Scheme& getScheme() { return std::get<Scheme>(getValue()); }
-        Scheme::Iterator getSchemeBegin() { return getScheme().begin(); }
+        const Rule& getRule() const { return std::get<Rule>(getValue()); }
+        const Scheme& getScheme() const { return std::get<Scheme>(getValue()); }
+        Scheme::Iterator getSchemeBegin() const { return getScheme().begin(); }
     };
     
-    Iterator begin() { return Iterator(head); }
+    Iterator begin() const { return Iterator(head); }
 };
 
-// fix this generator
 class StatementsGenerator : public FunMarListGenerator<std::variant<Rule, Scheme>> { 
 public:
     using FunMarListGenerator<std::variant<Rule, Scheme>>::FunMarListGenerator; 

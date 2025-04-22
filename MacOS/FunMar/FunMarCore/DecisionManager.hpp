@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AbstractionManager.h"
-#include "Environment.h"
+#include "AbstractionManager.hpp"
+#include "Environment.hpp"
 
 class DecisionManager {
 protected:

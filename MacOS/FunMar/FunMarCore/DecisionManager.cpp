@@ -1,7 +1,9 @@
-#include "DecisionManager.h"
+#include "DecisionManager.hpp"
+#include <iostream>
 
 
 bool DecisionManager::makeDecision() {
+    try {
     if (current.isPartiallyAbstract()) {
         abstractionManager.realizeFunctionAbstraction();
         return true;
@@ -18,8 +20,12 @@ bool DecisionManager::makeDecision() {
         return true;
     }
     else if (current.isFunctionActive()) {
-        Rule rule = current.getFunctionRule();
-        abstractionManager.tryRealzingRule(rule);
+        if (current.isStatementScheme()) {
+            current.activateScheme();
+        } else {
+            Rule rule = current.getFunctionRule();
+            abstractionManager.tryRealzingRule(rule);
+        }
         current.nextFunctionRule();
         return true;
     }
@@ -31,5 +37,10 @@ bool DecisionManager::makeDecision() {
         else {
             return false;
         }
+    }
+    }
+    catch (const char* err) {
+        std::cout << err << std::endl;
+        throw -1;
     }
 }

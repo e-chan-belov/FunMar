@@ -10,6 +10,15 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+
+if (MSVC)
+    # warning level 4
+    add_compile_options(/W4)
+else()
+    # additional warnings
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
 include_directories(antlr4-runtime)
 link_directories(/opt/homebrew/lib)
 
@@ -34,6 +43,13 @@ add_subdirectory(FunMar/FunMarContainers)
 
 target_link_libraries(main antlr4-runtime)
 target_link_libraries(main FunMarCore)
+
+set(LIBRARY FunMarCore antlr4-runtime)
+
+include_directories(gtest)
+set(TESTS "test_${PROJECT_NAME}")
+add_subdirectory(gtest)
+add_subdirectory(test)
 
 
 message( STATUS "")

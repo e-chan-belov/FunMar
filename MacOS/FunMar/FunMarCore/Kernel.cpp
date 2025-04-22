@@ -1,12 +1,12 @@
 #include "Kernel.hpp"
-#include "Environment.h"
-#include "DecisionManager.h"
+#include <iostream>
 
 Kernel::Kernel(const std::unordered_map<Variable, Statements>& task) : functions(task),
     envs(functions[(Variable)"main"].begin()), //todo
     environmentManager(envs),
     abstractionManager(environmentManager, envs.getReference(), functions),
     decisionManager(abstractionManager, envs.getReference()) {
+//        std::cout << "kerneldone";
 }
 
 Word& Kernel::execute(const Word& argument) {

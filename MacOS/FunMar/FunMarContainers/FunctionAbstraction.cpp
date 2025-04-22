@@ -17,29 +17,22 @@ Function& Function::operator=(Function&& obj) noexcept {
 }
 
 void FunctionAbstraction::Iterator::merge() {
-    if (!isWord()) { return; }
-    Word tmp = "";
-    if (previous.pointer != nullptr && std::holds_alternative<Word>(previous.getValue())) {
-        tmp = std::get<Word>(previous.getValue()) + getWord();
-        previous.pointer->next = current.pointer->next;
-        delete current.pointer;
-        current.pointer = previous.pointer;
-        previous.pointer = nullptr;
+    if (!isWord()) { throw -1; }
+    if (previous.isAtList() && std::holds_alternative<Word>(previous.getValue())) {
+        current.leftMerge(previous, (std::variant<Word, Variable, Function>)(Word)(std::get<Word>(previous.getValue()) + getWord()));
     }
-    else {
-        tmp = getWord();
+    if (hasNext()) {
+        FunctionAbstraction::Iterator nxt = *this;
+        nxt.next();
+        if (nxt.isWord()) {
+            current.rightMerge((std::variant<Word, Variable, Function>)(Word)(getWord() + nxt.getWord()));
+        }
     }
-    if (hasNext() && std::holds_alternative<Word>(current.pointer->next->getValue())) {
-        tmp += std::get<Word>(current.pointer->next->getValue());
-        current.pointer->next = current.pointer->next->next;
-        delete current.pointer->next;
-    }
-    getWord() = tmp;
 }
 
 std::string FunctionAbstraction::getStringRepresentation() const {
     std::string ans = "";
-    for (FunctionAbstraction::Iterator iter = begin(); iter.isAtList(); iter.next()) {
+    for (FunctionAbstraction::ObserverIterator iter = begin(); iter.isAtList(); iter.next()) {
         if (iter.isWord()) {
             ans += "'" + iter.getWord() + "'";
         }
@@ -47,7 +40,7 @@ std::string FunctionAbstraction::getStringRepresentation() const {
             ans += iter.getVariable();
         }
         else {
-            Function& f = iter.getFunction();
+            const Function& f = iter.getFunction();
             ans += f.getName() + "(" + f.getArgument().getStringRepresentation() + ")";
         }
     }

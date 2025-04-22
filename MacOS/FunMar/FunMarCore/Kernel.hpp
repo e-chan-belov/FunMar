@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Rule.hpp"
-#include "Environment.h"
-#include "DecisionManager.h"
+#include "Environment.hpp"
+#include "DecisionManager.hpp"
 #include <unordered_map>
 #include <stack>
 
