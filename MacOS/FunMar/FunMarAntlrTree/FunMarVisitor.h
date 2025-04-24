@@ -37,7 +37,9 @@ public:
 
     virtual std::any visitSbwordo(FunMarParser::SbwordoContext *context) = 0;
 
-    virtual std::any visitFunCall(FunMarParser::FunCallContext *context) = 0;
+    virtual std::any visitAbst(FunMarParser::AbstContext *context) = 0;
+
+    virtual std::any visitFuncAbst(FunMarParser::FuncAbstContext *context) = 0;
 
 
 };

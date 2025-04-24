@@ -6,9 +6,9 @@ func: ID '{' expStmt* '}';
 
 expStmt: stmt ';' | schm;
 
-stmt: rule | terminalRule;
+stmt: funMarRule | terminalRule;
 
-rule: sbwordi '->' sbwordo;
+funMarRule: sbwordi '->' sbwordo;
 
 terminalRule: sbwordi '=>' sbwordo;
 
@@ -16,9 +16,11 @@ schm: 'scheme' '{' expStmt* '}';
 
 sbwordi: LET? (ID LET)* ID?;
 
-sbwordo: LET? (funCall LET)* funCall?;
+sbwordo: funcAbst+;
 
-funCall: ID'('sbwordi')' | ID;
+abst: LET | ID;
+
+funcAbst: LET | ID | ID'('abst+')';
 
 LET: '"' .*? '"';
 ID: [a-zA-Z_][a-zA-Z_0-9]*;

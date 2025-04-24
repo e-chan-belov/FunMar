@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     FunMarParser parser(&tokens);
 
     tree::ParseTree *tree = parser.prog();
-    std::cout << "Parsed successfully: " << tree->toStringTree(&parser) << std::endl;
+    //std::cout << "Parsed successfully: " << tree->toStringTree(&parser) << std::endl;
 
     FunMarCompiler visitor;
     FunMarParser::ProgContext *progCtx = dynamic_cast<FunMarParser::ProgContext *>(tree);
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     
     std::cout<<"COMPILED!" << std::endl;
     
-    Statements mal = functions[(Variable)"mal"];
+    /*Statements mal = functions[(Variable)"main"];
     Statements::ObserverIterator iter = mal.begin();
     for (;iter.isAtList(); iter.next()) {
         if (iter.isRule()) {
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
             }
             std::cout << "}" << std::endl;
         }
-    }
+    }*/
     Word word;
     std::cout << "Enter your word" << std::endl;
     std::cin >> word;

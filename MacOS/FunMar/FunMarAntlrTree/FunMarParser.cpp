@@ -53,7 +53,7 @@ void funmarParserInitialize() {
   auto staticData = std::make_unique<FunMarParserStaticData>(
     std::vector<std::string>{
       "prog", "func", "expStmt", "stmt", "funMarRule", "terminalRule", "schm", 
-      "sbwordi", "sbwordo", "funCall"
+      "sbwordi", "sbwordo", "abst", "funcAbst"
     },
     std::vector<std::string>{
       "", "'{'", "'}'", "';'", "'->'", "'=>'", "'scheme'", "'('", "')'"
@@ -64,34 +64,34 @@ void funmarParserInitialize() {
   );
   static const int32_t serializedATNSegment[] = {
   	4,1,11,101,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
-  	7,7,7,2,8,7,8,2,9,7,9,1,0,4,0,22,8,0,11,0,12,0,23,1,0,1,0,1,1,1,1,1,1,
-  	5,1,31,8,1,10,1,12,1,34,9,1,1,1,1,1,1,2,1,2,1,2,1,2,3,2,42,8,2,1,3,1,
-  	3,3,3,46,8,3,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,6,1,6,1,6,5,6,59,8,6,10,
-  	6,12,6,62,9,6,1,6,1,6,1,7,3,7,67,8,7,1,7,1,7,5,7,71,8,7,10,7,12,7,74,
-  	9,7,1,7,3,7,77,8,7,1,8,3,8,80,8,8,1,8,1,8,1,8,5,8,85,8,8,10,8,12,8,88,
-  	9,8,1,8,3,8,91,8,8,1,9,1,9,1,9,1,9,1,9,1,9,3,9,99,8,9,1,9,0,0,10,0,2,
-  	4,6,8,10,12,14,16,18,0,0,102,0,21,1,0,0,0,2,27,1,0,0,0,4,41,1,0,0,0,6,
-  	45,1,0,0,0,8,47,1,0,0,0,10,51,1,0,0,0,12,55,1,0,0,0,14,66,1,0,0,0,16,
-  	79,1,0,0,0,18,98,1,0,0,0,20,22,3,2,1,0,21,20,1,0,0,0,22,23,1,0,0,0,23,
-  	21,1,0,0,0,23,24,1,0,0,0,24,25,1,0,0,0,25,26,5,0,0,1,26,1,1,0,0,0,27,
-  	28,5,10,0,0,28,32,5,1,0,0,29,31,3,4,2,0,30,29,1,0,0,0,31,34,1,0,0,0,32,
-  	30,1,0,0,0,32,33,1,0,0,0,33,35,1,0,0,0,34,32,1,0,0,0,35,36,5,2,0,0,36,
-  	3,1,0,0,0,37,38,3,6,3,0,38,39,5,3,0,0,39,42,1,0,0,0,40,42,3,12,6,0,41,
-  	37,1,0,0,0,41,40,1,0,0,0,42,5,1,0,0,0,43,46,3,8,4,0,44,46,3,10,5,0,45,
-  	43,1,0,0,0,45,44,1,0,0,0,46,7,1,0,0,0,47,48,3,14,7,0,48,49,5,4,0,0,49,
-  	50,3,16,8,0,50,9,1,0,0,0,51,52,3,14,7,0,52,53,5,5,0,0,53,54,3,16,8,0,
-  	54,11,1,0,0,0,55,56,5,6,0,0,56,60,5,1,0,0,57,59,3,6,3,0,58,57,1,0,0,0,
-  	59,62,1,0,0,0,60,58,1,0,0,0,60,61,1,0,0,0,61,63,1,0,0,0,62,60,1,0,0,0,
-  	63,64,5,2,0,0,64,13,1,0,0,0,65,67,5,9,0,0,66,65,1,0,0,0,66,67,1,0,0,0,
-  	67,72,1,0,0,0,68,69,5,10,0,0,69,71,5,9,0,0,70,68,1,0,0,0,71,74,1,0,0,
-  	0,72,70,1,0,0,0,72,73,1,0,0,0,73,76,1,0,0,0,74,72,1,0,0,0,75,77,5,10,
-  	0,0,76,75,1,0,0,0,76,77,1,0,0,0,77,15,1,0,0,0,78,80,5,9,0,0,79,78,1,0,
-  	0,0,79,80,1,0,0,0,80,86,1,0,0,0,81,82,3,18,9,0,82,83,5,9,0,0,83,85,1,
-  	0,0,0,84,81,1,0,0,0,85,88,1,0,0,0,86,84,1,0,0,0,86,87,1,0,0,0,87,90,1,
-  	0,0,0,88,86,1,0,0,0,89,91,3,18,9,0,90,89,1,0,0,0,90,91,1,0,0,0,91,17,
-  	1,0,0,0,92,93,5,10,0,0,93,94,5,7,0,0,94,95,3,14,7,0,95,96,5,8,0,0,96,
-  	99,1,0,0,0,97,99,5,10,0,0,98,92,1,0,0,0,98,97,1,0,0,0,99,19,1,0,0,0,12,
-  	23,32,41,45,60,66,72,76,79,86,90,98
+  	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,1,0,4,0,24,8,0,11,0,12,0,25,1,0,1,0,1,
+  	1,1,1,1,1,5,1,33,8,1,10,1,12,1,36,9,1,1,1,1,1,1,2,1,2,1,2,1,2,3,2,44,
+  	8,2,1,3,1,3,3,3,48,8,3,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,6,1,6,1,6,5,
+  	6,61,8,6,10,6,12,6,64,9,6,1,6,1,6,1,7,3,7,69,8,7,1,7,1,7,5,7,73,8,7,10,
+  	7,12,7,76,9,7,1,7,3,7,79,8,7,1,8,4,8,82,8,8,11,8,12,8,83,1,9,1,9,1,10,
+  	1,10,1,10,1,10,1,10,4,10,93,8,10,11,10,12,10,94,1,10,1,10,3,10,99,8,10,
+  	1,10,0,0,11,0,2,4,6,8,10,12,14,16,18,20,0,1,1,0,9,10,101,0,23,1,0,0,0,
+  	2,29,1,0,0,0,4,43,1,0,0,0,6,47,1,0,0,0,8,49,1,0,0,0,10,53,1,0,0,0,12,
+  	57,1,0,0,0,14,68,1,0,0,0,16,81,1,0,0,0,18,85,1,0,0,0,20,98,1,0,0,0,22,
+  	24,3,2,1,0,23,22,1,0,0,0,24,25,1,0,0,0,25,23,1,0,0,0,25,26,1,0,0,0,26,
+  	27,1,0,0,0,27,28,5,0,0,1,28,1,1,0,0,0,29,30,5,10,0,0,30,34,5,1,0,0,31,
+  	33,3,4,2,0,32,31,1,0,0,0,33,36,1,0,0,0,34,32,1,0,0,0,34,35,1,0,0,0,35,
+  	37,1,0,0,0,36,34,1,0,0,0,37,38,5,2,0,0,38,3,1,0,0,0,39,40,3,6,3,0,40,
+  	41,5,3,0,0,41,44,1,0,0,0,42,44,3,12,6,0,43,39,1,0,0,0,43,42,1,0,0,0,44,
+  	5,1,0,0,0,45,48,3,8,4,0,46,48,3,10,5,0,47,45,1,0,0,0,47,46,1,0,0,0,48,
+  	7,1,0,0,0,49,50,3,14,7,0,50,51,5,4,0,0,51,52,3,16,8,0,52,9,1,0,0,0,53,
+  	54,3,14,7,0,54,55,5,5,0,0,55,56,3,16,8,0,56,11,1,0,0,0,57,58,5,6,0,0,
+  	58,62,5,1,0,0,59,61,3,4,2,0,60,59,1,0,0,0,61,64,1,0,0,0,62,60,1,0,0,0,
+  	62,63,1,0,0,0,63,65,1,0,0,0,64,62,1,0,0,0,65,66,5,2,0,0,66,13,1,0,0,0,
+  	67,69,5,9,0,0,68,67,1,0,0,0,68,69,1,0,0,0,69,74,1,0,0,0,70,71,5,10,0,
+  	0,71,73,5,9,0,0,72,70,1,0,0,0,73,76,1,0,0,0,74,72,1,0,0,0,74,75,1,0,0,
+  	0,75,78,1,0,0,0,76,74,1,0,0,0,77,79,5,10,0,0,78,77,1,0,0,0,78,79,1,0,
+  	0,0,79,15,1,0,0,0,80,82,3,20,10,0,81,80,1,0,0,0,82,83,1,0,0,0,83,81,1,
+  	0,0,0,83,84,1,0,0,0,84,17,1,0,0,0,85,86,7,0,0,0,86,19,1,0,0,0,87,99,5,
+  	9,0,0,88,99,5,10,0,0,89,90,5,10,0,0,90,92,5,7,0,0,91,93,3,18,9,0,92,91,
+  	1,0,0,0,93,94,1,0,0,0,94,92,1,0,0,0,94,95,1,0,0,0,95,96,1,0,0,0,96,97,
+  	5,8,0,0,97,99,1,0,0,0,98,87,1,0,0,0,98,88,1,0,0,0,98,89,1,0,0,0,99,21,
+  	1,0,0,0,11,25,34,43,47,62,68,74,78,83,94,98
   };
   staticData->serializedATN = antlr4::atn::SerializedATNView(serializedATNSegment, sizeof(serializedATNSegment) / sizeof(serializedATNSegment[0]));
 
@@ -185,17 +185,17 @@ FunMarParser::ProgContext* FunMarParser::prog() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(21); 
+    setState(23); 
     _errHandler->sync(this);
     _la = _input->LA(1);
     do {
-      setState(20);
+      setState(22);
       func();
-      setState(23); 
+      setState(25); 
       _errHandler->sync(this);
       _la = _input->LA(1);
     } while (_la == FunMarParser::ID);
-    setState(25);
+    setState(27);
     match(FunMarParser::EOF);
    
   }
@@ -253,22 +253,22 @@ FunMarParser::FuncContext* FunMarParser::func() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(27);
+    setState(29);
     match(FunMarParser::ID);
-    setState(28);
+    setState(30);
     match(FunMarParser::T__0);
-    setState(32);
+    setState(34);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
       ((1ULL << _la) & 1648) != 0)) {
-      setState(29);
+      setState(31);
       expStmt();
-      setState(34);
+      setState(36);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(35);
+    setState(37);
     match(FunMarParser::T__1);
    
   }
@@ -320,7 +320,7 @@ FunMarParser::ExpStmtContext* FunMarParser::expStmt() {
     exitRule();
   });
   try {
-    setState(41);
+    setState(43);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case FunMarParser::T__3:
@@ -328,16 +328,16 @@ FunMarParser::ExpStmtContext* FunMarParser::expStmt() {
       case FunMarParser::LET:
       case FunMarParser::ID: {
         enterOuterAlt(_localctx, 1);
-        setState(37);
+        setState(39);
         stmt();
-        setState(38);
+        setState(40);
         match(FunMarParser::T__2);
         break;
       }
 
       case FunMarParser::T__5: {
         enterOuterAlt(_localctx, 2);
-        setState(40);
+        setState(42);
         schm();
         break;
       }
@@ -395,19 +395,19 @@ FunMarParser::StmtContext* FunMarParser::stmt() {
     exitRule();
   });
   try {
-    setState(45);
+    setState(47);
     _errHandler->sync(this);
     switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(43);
+      setState(45);
       funMarRule();
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(44);
+      setState(46);
       terminalRule();
       break;
     }
@@ -466,11 +466,11 @@ FunMarParser::FunMarRuleContext* FunMarParser::funMarRule() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(47);
-    sbwordi();
-    setState(48);
-    match(FunMarParser::T__3);
     setState(49);
+    sbwordi();
+    setState(50);
+    match(FunMarParser::T__3);
+    setState(51);
     sbwordo();
    
   }
@@ -523,11 +523,11 @@ FunMarParser::TerminalRuleContext* FunMarParser::terminalRule() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(51);
-    sbwordi();
-    setState(52);
-    match(FunMarParser::T__4);
     setState(53);
+    sbwordi();
+    setState(54);
+    match(FunMarParser::T__4);
+    setState(55);
     sbwordo();
    
   }
@@ -546,12 +546,12 @@ FunMarParser::SchmContext::SchmContext(ParserRuleContext *parent, size_t invokin
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<FunMarParser::StmtContext *> FunMarParser::SchmContext::stmt() {
-  return getRuleContexts<FunMarParser::StmtContext>();
+std::vector<FunMarParser::ExpStmtContext *> FunMarParser::SchmContext::expStmt() {
+  return getRuleContexts<FunMarParser::ExpStmtContext>();
 }
 
-FunMarParser::StmtContext* FunMarParser::SchmContext::stmt(size_t i) {
-  return getRuleContext<FunMarParser::StmtContext>(i);
+FunMarParser::ExpStmtContext* FunMarParser::SchmContext::expStmt(size_t i) {
+  return getRuleContext<FunMarParser::ExpStmtContext>(i);
 }
 
 
@@ -581,22 +581,22 @@ FunMarParser::SchmContext* FunMarParser::schm() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(55);
+    setState(57);
     match(FunMarParser::T__5);
-    setState(56);
+    setState(58);
     match(FunMarParser::T__0);
-    setState(60);
+    setState(62);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 1584) != 0)) {
-      setState(57);
-      stmt();
-      setState(62);
+      ((1ULL << _la) & 1648) != 0)) {
+      setState(59);
+      expStmt();
+      setState(64);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(63);
+    setState(65);
     match(FunMarParser::T__1);
    
   }
@@ -659,34 +659,34 @@ FunMarParser::SbwordiContext* FunMarParser::sbwordi() {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(66);
+    setState(68);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == FunMarParser::LET) {
-      setState(65);
+      setState(67);
       match(FunMarParser::LET);
     }
-    setState(72);
+    setState(74);
     _errHandler->sync(this);
     alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 6, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
-        setState(68);
+        setState(70);
         match(FunMarParser::ID);
-        setState(69);
+        setState(71);
         match(FunMarParser::LET); 
       }
-      setState(74);
+      setState(76);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 6, _ctx);
     }
-    setState(76);
+    setState(78);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == FunMarParser::ID) {
-      setState(75);
+      setState(77);
       match(FunMarParser::ID);
     }
    
@@ -706,20 +706,12 @@ FunMarParser::SbwordoContext::SbwordoContext(ParserRuleContext *parent, size_t i
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<tree::TerminalNode *> FunMarParser::SbwordoContext::LET() {
-  return getTokens(FunMarParser::LET);
+std::vector<FunMarParser::FuncAbstContext *> FunMarParser::SbwordoContext::funcAbst() {
+  return getRuleContexts<FunMarParser::FuncAbstContext>();
 }
 
-tree::TerminalNode* FunMarParser::SbwordoContext::LET(size_t i) {
-  return getToken(FunMarParser::LET, i);
-}
-
-std::vector<FunMarParser::FunCallContext *> FunMarParser::SbwordoContext::funCall() {
-  return getRuleContexts<FunMarParser::FunCallContext>();
-}
-
-FunMarParser::FunCallContext* FunMarParser::SbwordoContext::funCall(size_t i) {
-  return getRuleContext<FunMarParser::FunCallContext>(i);
+FunMarParser::FuncAbstContext* FunMarParser::SbwordoContext::funcAbst(size_t i) {
+  return getRuleContext<FunMarParser::FuncAbstContext>(i);
 }
 
 
@@ -738,6 +730,7 @@ std::any FunMarParser::SbwordoContext::accept(tree::ParseTreeVisitor *visitor) {
 FunMarParser::SbwordoContext* FunMarParser::sbwordo() {
   SbwordoContext *_localctx = _tracker.createInstance<SbwordoContext>(_ctx, getState());
   enterRule(_localctx, 16, FunMarParser::RuleSbwordo);
+  size_t _la = 0;
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -747,47 +740,81 @@ FunMarParser::SbwordoContext* FunMarParser::sbwordo() {
     exitRule();
   });
   try {
-    size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(79);
+    setState(81); 
     _errHandler->sync(this);
-
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 8, _ctx)) {
-    case 1: {
-      setState(78);
-      match(FunMarParser::LET);
-      break;
-    }
-
-    default:
-      break;
-    }
-    setState(86);
-    _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 9, _ctx);
-    while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
-      if (alt == 1) {
-        setState(81);
-        funCall();
-        setState(82);
-        match(FunMarParser::LET); 
-      }
-      setState(88);
+    _la = _input->LA(1);
+    do {
+      setState(80);
+      funcAbst();
+      setState(83); 
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 9, _ctx);
-    }
-    setState(90);
-    _errHandler->sync(this);
+      _la = _input->LA(1);
+    } while (_la == FunMarParser::LET
 
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 10, _ctx)) {
-    case 1: {
-      setState(89);
-      funCall();
-      break;
-    }
+    || _la == FunMarParser::ID);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
 
-    default:
-      break;
+  return _localctx;
+}
+
+//----------------- AbstContext ------------------------------------------------------------------
+
+FunMarParser::AbstContext::AbstContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+tree::TerminalNode* FunMarParser::AbstContext::LET() {
+  return getToken(FunMarParser::LET, 0);
+}
+
+tree::TerminalNode* FunMarParser::AbstContext::ID() {
+  return getToken(FunMarParser::ID, 0);
+}
+
+
+size_t FunMarParser::AbstContext::getRuleIndex() const {
+  return FunMarParser::RuleAbst;
+}
+
+
+std::any FunMarParser::AbstContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<FunMarVisitor*>(visitor))
+    return parserVisitor->visitAbst(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+FunMarParser::AbstContext* FunMarParser::abst() {
+  AbstContext *_localctx = _tracker.createInstance<AbstContext>(_ctx, getState());
+  enterRule(_localctx, 18, FunMarParser::RuleAbst);
+  size_t _la = 0;
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(85);
+    _la = _input->LA(1);
+    if (!(_la == FunMarParser::LET
+
+    || _la == FunMarParser::ID)) {
+    _errHandler->recoverInline(this);
+    }
+    else {
+      _errHandler->reportMatch(this);
+      consume();
     }
    
   }
@@ -800,36 +827,45 @@ FunMarParser::SbwordoContext* FunMarParser::sbwordo() {
   return _localctx;
 }
 
-//----------------- FunCallContext ------------------------------------------------------------------
+//----------------- FuncAbstContext ------------------------------------------------------------------
 
-FunMarParser::FunCallContext::FunCallContext(ParserRuleContext *parent, size_t invokingState)
+FunMarParser::FuncAbstContext::FuncAbstContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* FunMarParser::FunCallContext::ID() {
+tree::TerminalNode* FunMarParser::FuncAbstContext::LET() {
+  return getToken(FunMarParser::LET, 0);
+}
+
+tree::TerminalNode* FunMarParser::FuncAbstContext::ID() {
   return getToken(FunMarParser::ID, 0);
 }
 
-FunMarParser::SbwordiContext* FunMarParser::FunCallContext::sbwordi() {
-  return getRuleContext<FunMarParser::SbwordiContext>(0);
+std::vector<FunMarParser::AbstContext *> FunMarParser::FuncAbstContext::abst() {
+  return getRuleContexts<FunMarParser::AbstContext>();
+}
+
+FunMarParser::AbstContext* FunMarParser::FuncAbstContext::abst(size_t i) {
+  return getRuleContext<FunMarParser::AbstContext>(i);
 }
 
 
-size_t FunMarParser::FunCallContext::getRuleIndex() const {
-  return FunMarParser::RuleFunCall;
+size_t FunMarParser::FuncAbstContext::getRuleIndex() const {
+  return FunMarParser::RuleFuncAbst;
 }
 
 
-std::any FunMarParser::FunCallContext::accept(tree::ParseTreeVisitor *visitor) {
+std::any FunMarParser::FuncAbstContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<FunMarVisitor*>(visitor))
-    return parserVisitor->visitFunCall(this);
+    return parserVisitor->visitFuncAbst(this);
   else
     return visitor->visitChildren(this);
 }
 
-FunMarParser::FunCallContext* FunMarParser::funCall() {
-  FunCallContext *_localctx = _tracker.createInstance<FunCallContext>(_ctx, getState());
-  enterRule(_localctx, 18, FunMarParser::RuleFunCall);
+FunMarParser::FuncAbstContext* FunMarParser::funcAbst() {
+  FuncAbstContext *_localctx = _tracker.createInstance<FuncAbstContext>(_ctx, getState());
+  enterRule(_localctx, 20, FunMarParser::RuleFuncAbst);
+  size_t _la = 0;
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -841,24 +877,41 @@ FunMarParser::FunCallContext* FunMarParser::funCall() {
   try {
     setState(98);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 11, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 10, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(92);
-      match(FunMarParser::ID);
-      setState(93);
-      match(FunMarParser::T__6);
-      setState(94);
-      sbwordi();
-      setState(95);
-      match(FunMarParser::T__7);
+      setState(87);
+      match(FunMarParser::LET);
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(97);
+      setState(88);
       match(FunMarParser::ID);
+      break;
+    }
+
+    case 3: {
+      enterOuterAlt(_localctx, 3);
+      setState(89);
+      match(FunMarParser::ID);
+      setState(90);
+      match(FunMarParser::T__6);
+      setState(92); 
+      _errHandler->sync(this);
+      _la = _input->LA(1);
+      do {
+        setState(91);
+        abst();
+        setState(94); 
+        _errHandler->sync(this);
+        _la = _input->LA(1);
+      } while (_la == FunMarParser::LET
+
+      || _la == FunMarParser::ID);
+      setState(96);
+      match(FunMarParser::T__7);
       break;
     }
 

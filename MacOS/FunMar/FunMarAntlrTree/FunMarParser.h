@@ -19,7 +19,7 @@ public:
   enum {
     RuleProg = 0, RuleFunc = 1, RuleExpStmt = 2, RuleStmt = 3, RuleFunMarRule = 4, 
     RuleTerminalRule = 5, RuleSchm = 6, RuleSbwordi = 7, RuleSbwordo = 8, 
-    RuleFunCall = 9
+    RuleAbst = 9, RuleFuncAbst = 10
   };
 
   explicit FunMarParser(antlr4::TokenStream *input);
@@ -48,7 +48,8 @@ public:
   class SchmContext;
   class SbwordiContext;
   class SbwordoContext;
-  class FunCallContext; 
+  class AbstContext;
+  class FuncAbstContext; 
 
   class  ProgContext : public antlr4::ParserRuleContext {
   public:
@@ -140,8 +141,8 @@ public:
   public:
     SchmContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<StmtContext *> stmt();
-    StmtContext* stmt(size_t i);
+    std::vector<ExpStmtContext *> expStmt();
+    ExpStmtContext* expStmt(size_t i);
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -170,10 +171,8 @@ public:
   public:
     SbwordoContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<antlr4::tree::TerminalNode *> LET();
-    antlr4::tree::TerminalNode* LET(size_t i);
-    std::vector<FunCallContext *> funCall();
-    FunCallContext* funCall(size_t i);
+    std::vector<FuncAbstContext *> funcAbst();
+    FuncAbstContext* funcAbst(size_t i);
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -182,19 +181,35 @@ public:
 
   SbwordoContext* sbwordo();
 
-  class  FunCallContext : public antlr4::ParserRuleContext {
+  class  AbstContext : public antlr4::ParserRuleContext {
   public:
-    FunCallContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    AbstContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *LET();
     antlr4::tree::TerminalNode *ID();
-    SbwordiContext *sbwordi();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
    
   };
 
-  FunCallContext* funCall();
+  AbstContext* abst();
+
+  class  FuncAbstContext : public antlr4::ParserRuleContext {
+  public:
+    FuncAbstContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *LET();
+    antlr4::tree::TerminalNode *ID();
+    std::vector<AbstContext *> abst();
+    AbstContext* abst(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  FuncAbstContext* funcAbst();
 
 
   // By default the static state used to implement the parser is lazily initialized during the first

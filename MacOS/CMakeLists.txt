@@ -29,7 +29,7 @@ include_directories(FunMar/FunMarCore)
 include_directories(FunMar/FunMarAntlrTree)
 include_directories(FunMar/FunMarContainers)
 
-add_definitions(-DFILE_PATH="${CMAKE_SOURCE_DIR}/input/FunMarMalloc.fm")
+add_definitions(-DFILE_PATH="${CMAKE_SOURCE_DIR}/input/main.fm")
 
 set(SOURCE_FILES
     samples/main.cpp

@@ -51,7 +51,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFunCall(FunMarParser::FunCallContext *ctx) override {
+  virtual std::any visitAbst(FunMarParser::AbstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFuncAbst(FunMarParser::FuncAbstContext *ctx) override {
     return visitChildren(ctx);
   }
 

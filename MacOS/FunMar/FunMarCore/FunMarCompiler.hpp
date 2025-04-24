@@ -71,8 +71,8 @@ public:
   }
 
   virtual std::any visitSchm(FunMarParser::SchmContext *ctx) override {
-      for (auto* stmtCtx : ctx->stmt()) {
-          schemeGenerator.push(std::any_cast<Rule>(visitStmt(stmtCtx))); // rule
+      for (auto* stmtCtx : ctx->expStmt()) {
+          schemeGenerator.push(std::any_cast<Rule>(visitExpStmt(stmtCtx))); // rule
       }
       return schemeGenerator.generate(); // scheme
   }
@@ -94,26 +94,49 @@ public:
   }
 
   virtual std::any visitSbwordo(FunMarParser::SbwordoContext *ctx) override {
-      for (auto token : ctx->children) {
-          if (auto let = dynamic_cast<antlr4::tree::TerminalNode*>(token)) {
-              std::string strr = let->getText();
-              strr = strr.substr(1, strr.size() - 2);
-            functionAbstractionGenerator.push((Word)(strr));
-          }
-          else if (auto funCall = dynamic_cast<FunMarParser::FunCallContext*>(token)) {
-              std::any funelem = visitFunCall(funCall);
-              if (funelem.type() == typeid(Variable)) {
-                  functionAbstractionGenerator.push(std::any_cast<Variable>(funelem));
-              }
-              else {
-                  functionAbstractionGenerator.push(std::any_cast<Function>(funelem));
-              } // id or abstraction
-          }
+      for (auto abst : ctx->funcAbst()) {
+          auto value = visitFuncAbst(abst);
+          if (value.type() == typeid(Word)) { functionAbstractionGenerator.push(std::any_cast<Word>(value)); }
+          else if (value.type() == typeid(Variable)) { functionAbstractionGenerator.push(std::any_cast<Variable>(value)); }
+          else { functionAbstractionGenerator.push(std::any_cast<Function>(value)); }
       }
       return functionAbstractionGenerator.generate(); // functionabstraction
   }
+    
+    virtual std::any visitAbst(FunMarParser::AbstContext *ctx) override {
+        if (ctx->LET()) {
+            std::string strrr = ctx->LET()->getText();
+            return (Word)strrr.substr(1, strrr.size() - 2);
+        }
+        else if (ctx->ID()) { return (Variable)ctx->ID()->getText(); }
+        return nullptr;
+    }
 
-  virtual std::any visitFunCall(FunMarParser::FunCallContext *ctx) override {
+    virtual std::any visitFuncAbst(FunMarParser::FuncAbstContext *ctx) override {
+        if (ctx->LET()) {
+            std::string strrr = ctx->LET()->getText();
+            return (Word)strrr.substr(1, strrr.size() - 2);
+        }
+        else if (ctx->children.size() == 1) {
+            return (Variable)(ctx->ID()->getText());
+        }
+        else {
+            Variable var = ctx->ID()->getText();
+            for (auto abstr : ctx->abst()) {
+                auto value = visitAbst(abstr);
+                if (value.type() == typeid(Word)) {
+                    abstractionGenerator.push(std::any_cast<Word>(value));
+                }
+                else {
+                    abstractionGenerator.push(std::any_cast<Variable>(value));
+                }
+            }
+            Abstraction arg = abstractionGenerator.generate();
+            return Function(var, arg);
+        }
+    }
+
+  /*virtual std::any visitFunCall(FunMarParser::FunCallContext *ctx) override {
       if (ctx->children.size() == 1) {
           return (Variable)(ctx->ID()->getText());
       }
@@ -122,7 +145,7 @@ public:
           Abstraction arg = std::any_cast<Abstraction>(visitSbwordi(ctx->sbwordi()));
           return Function(var, arg);
       }
-  }
+  }*/
 
     std::unordered_map<Variable, Statements>& compile() {
         return functions;
