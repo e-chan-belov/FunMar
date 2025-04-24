@@ -2,7 +2,9 @@ project(FunMarContainers)
 
 set(SOURCE_LIB Abstraction.cpp 
 	FunctionAbstraction.cpp
-	Rule.cpp)
+	Rule.cpp
+	FunMarStack.cpp
+)
 
 add_library(FunMarContainers STATIC ${SOURCE_LIB})
 

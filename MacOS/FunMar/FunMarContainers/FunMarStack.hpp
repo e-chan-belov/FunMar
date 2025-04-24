@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 
 template <class T>
 class FunMarStackNode {
@@ -18,15 +19,15 @@ public:
 template <class T>
 class FunMarBuffer {
 protected:
-    size_t step;
-    size_t amount;
+    std::size_t step;
+    std::size_t amount;
     FunMarStackNode<T>* head;
 
     FunMarStackNode<T>* allocateMoreNodes() {
         // static char[sizeof(T)] zeroes = {};
         // static T emptyValue = *( (T*)( zeroes ));
         FunMarStackNode<T>* tail = nullptr;
-        for (size_t i = 0; i < step; i++) {
+        for (std::size_t i = 0; i < step; i++) {
             tail = new FunMarStackNode<T>(T{}, tail);
         }
         amount += step;
@@ -35,7 +36,7 @@ protected:
 
     void deallocateNodes() {
         FunMarStackNode<T>* temp;
-        for (size_t i = 0; i < step; i++) {
+        for (std::size_t i = 0; i < step; i++) {
             temp = head->next;
             delete head;
             head = temp;
@@ -43,7 +44,7 @@ protected:
         amount -= step;
     }
 public:
-    FunMarBuffer(size_t step_ = 3) : step(step_), amount(0) {
+    FunMarBuffer(std::size_t step_ = 3) : step(step_), amount(0) {
         head = allocateMoreNodes();
     }
 
