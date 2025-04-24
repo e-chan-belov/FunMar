@@ -37,7 +37,7 @@ public:
     FunctionAbstraction(FunMarList<std::variant<Word, Variable, Function>>&& list) noexcept : FunMarList(std::move(list)) {}
 
     
-    bool isRealized() { return head != nullptr && head->next == nullptr && std::holds_alternative<Word>(head->value); }
+    bool isRealized() const { return head != nullptr && head->next == nullptr && std::holds_alternative<Word>(head->value); }
     Word& getRealization() { return std::get<Word>(head->value); }
     const Word& getRealization() const { return std::get<Word>(head->value); }
 
@@ -76,6 +76,9 @@ public:
         FunMarList<std::variant<Word, Variable, Function>>::Iterator current;
     public:
         Iterator(FunMarListNode<std::variant<Word, Variable, Function>>* head_ = nullptr) : previous(nullptr), current(head_) {}
+        Iterator(const Iterator& iter) : previous(iter.previous), current(iter.current) {}
+
+        Iterator& operator=(const Iterator& iter) { if (this != &iter) { previous = iter.previous; current = iter.current; } return *this;  }
 
         bool isAtList() const {return current.isAtList(); }
         bool hasNext() const { return current.hasNext(); }

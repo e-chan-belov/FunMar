@@ -40,7 +40,7 @@ public:
     Abstraction(const FunMarList<std::variant<Word, Variable>>& list) : FunMarList(list) {}
     Abstraction(FunMarList<std::variant<Word, Variable>>&& list) noexcept : FunMarList(std::move(list)) {}
 
-    bool isRealized() { return head != nullptr && head->next == nullptr && std::holds_alternative<Word>(head->getValue()); }
+    bool isRealized() const { return head != nullptr && head->next == nullptr && std::holds_alternative<Word>(head->getValue()); }
     Word& getRealization() { return std::get<Word>(head->getValue()); }
     const Word& getRealization() const { return std::get<Word>(head->getValue()); }
 

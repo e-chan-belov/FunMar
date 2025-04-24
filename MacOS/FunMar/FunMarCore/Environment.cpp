@@ -4,7 +4,7 @@ PartialAbstraction& PartialAbstraction::operator=(const PartialAbstraction& part
     if (&partial != this) {
         inputRealization = partial.inputRealization;
         abstraction = partial.abstraction;
-        callFunctionIterator = partial.callFunctionIterator;
+        moveCallFunctionIterator();
     }
     return *this;
 }

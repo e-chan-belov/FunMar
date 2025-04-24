@@ -38,14 +38,14 @@ public:
     Scheme(const FunMarList<Rule>& list) : FunMarList(list) {}
     Scheme(FunMarList<Rule>&& list) : FunMarList(std::move(list)) {}
 
-    class Iterator : public FunMarList<Rule>::ObserverIterator {
+    class ObserverIterator : public FunMarList<Rule>::ObserverIterator {
     public:
         using FunMarList<Rule>::ObserverIterator::ObserverIterator;
 
         const Rule& getRule() const { return getValue(); }
     };
 
-    Iterator begin() const { return Iterator(head); }
+    ObserverIterator begin() const { return ObserverIterator(head); }
 };
 
 class SchemeGenerator : public FunMarListGenerator<Rule> { 
@@ -60,19 +60,19 @@ public:
     Statements(const FunMarList<std::variant<Rule, Scheme>>& list) : FunMarList(list) {}
     Statements(FunMarList<std::variant<Rule, Scheme>>&& list) : FunMarList(std::move(list)) {}
 
-    class Iterator : public FunMarList<std::variant<Rule, Scheme>>::ObserverIterator {
+    class ObserverIterator : public FunMarList<std::variant<Rule, Scheme>>::ObserverIterator {
     public:
         using FunMarList<std::variant<Rule, Scheme>>::ObserverIterator::ObserverIterator;
         
-        bool isRule() { return std::holds_alternative<Rule>(getValue()); }
-        bool isScheme() { return !isRule(); }
+        bool isRule() const { return std::holds_alternative<Rule>(getValue()); }
+        bool isScheme() const { return !isRule(); }
         
         const Rule& getRule() const { return std::get<Rule>(getValue()); }
         const Scheme& getScheme() const { return std::get<Scheme>(getValue()); }
-        Scheme::Iterator getSchemeBegin() const { return getScheme().begin(); }
+        Scheme::ObserverIterator getSchemeBegin() const { return getScheme().begin(); }
     };
     
-    Iterator begin() const { return Iterator(head); }
+    ObserverIterator begin() const { return ObserverIterator(head); }
 };
 
 class StatementsGenerator : public FunMarListGenerator<std::variant<Rule, Scheme>> { 

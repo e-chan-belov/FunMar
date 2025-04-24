@@ -46,10 +46,11 @@ public:
     
     FunMarList<T>& operator=(const FunMarList<T>& list) {
         if (this != &list) {
-            while (head != nullptr) {
-                FunMarListNode<T>* next = head->next;
-                delete head;
-                head = next;
+            FunMarListNode<T>* node = head;
+            while (node != nullptr) {
+                FunMarListNode<T>* next = node->next;
+                delete node;
+                node = next;
             }
             if (list.head == nullptr) {
                 head = nullptr;
@@ -74,11 +75,11 @@ public:
     }
     
     ~FunMarList() {
-        FunMarListNode<T>* next;
-        while (head != nullptr) {
-            next = head->next;
-            delete head;
-            head = next;
+        FunMarListNode<T>* node = head;
+        while (node != nullptr) {
+            FunMarListNode<T>* next = node->next;
+            delete node;
+            node = next;
         }
         head = nullptr;
     }

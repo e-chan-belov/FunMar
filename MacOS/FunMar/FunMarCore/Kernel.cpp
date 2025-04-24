@@ -6,7 +6,6 @@ Kernel::Kernel(const std::unordered_map<Variable, Statements>& task) : functions
     environmentManager(envs),
     abstractionManager(environmentManager, envs.getReference(), functions),
     decisionManager(abstractionManager, envs.getReference()) {
-//        std::cout << "kerneldone";
 }
 
 Word& Kernel::execute(const Word& argument) {

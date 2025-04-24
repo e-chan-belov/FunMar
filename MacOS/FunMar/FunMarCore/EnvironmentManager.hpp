@@ -10,7 +10,7 @@ public:
 
     ~EnvironmentManager() = default;
 
-    void fork(Statements::Iterator iter, const Word& wrd) { envs.push(iter, wrd); }
+    void fork(const Statements& func, const Word& wrd) { envs.push(func.begin(), wrd); }
 
     void kill() { envs.pop(); }
 

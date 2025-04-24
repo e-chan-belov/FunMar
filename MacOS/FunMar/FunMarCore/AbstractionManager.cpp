@@ -3,7 +3,7 @@
 #include <list>
 #include <iostream>
 
-AbstractionManager::AbstractionManager(EnvironmentManager& environmentManager_, Environment& current_, std::unordered_map<Variable, Statements>& funcs) : environmentManager(environmentManager_), current(current_), functions(funcs) {}
+AbstractionManager::AbstractionManager(EnvironmentManager& environmentManager_, Environment& current_, const std::unordered_map<Variable, Statements>& funcs) : environmentManager(environmentManager_), current(current_), functions(funcs) {}
 
 bool AbstractionManager::tryRealzingRule(const Rule& rule) {
     const Word& currentWord = current.getWord();
@@ -82,7 +82,7 @@ void AbstractionManager::realizeFunctionAbstraction() {
     Variable FunctionName = partial.getFunctionCall().getName();
     
     Word word = partial.getFunctionCall().getArgument().getRealization();
-    environmentManager.fork(functions[FunctionName].begin(), word);
+    environmentManager.fork(functions.at(FunctionName), word);
 }
 
 void AbstractionManager::returnAnswer() {

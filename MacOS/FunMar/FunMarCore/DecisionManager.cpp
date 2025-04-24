@@ -3,7 +3,6 @@
 
 
 bool DecisionManager::makeDecision() {
-    try {
     if (current.isPartiallyAbstract()) {
         abstractionManager.realizeFunctionAbstraction();
         return true;
@@ -37,10 +36,5 @@ bool DecisionManager::makeDecision() {
         else {
             return false;
         }
-    }
-    }
-    catch (const char* err) {
-        std::cout << err << std::endl;
-        throw -1;
     }
 }

@@ -51,6 +51,10 @@ set(TESTS "test_${PROJECT_NAME}")
 add_subdirectory(gtest)
 add_subdirectory(test)
 
+set_target_properties(main PROPERTIES
+	XCODE_GENERATE_SCHEME TRUE
+	SCODE_SCHEME_WORKING_DIRECTORY FunMar)
+
 
 message( STATUS "")
 message( STATUS "General configuration for ${PROJECT_NAME}")
