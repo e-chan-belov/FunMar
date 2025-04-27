@@ -136,3 +136,4 @@ scheme {
 **Для MacOS:** 
 
 ```brew install antlr```
+```brew install antlr4-cpp-runtime```
