@@ -59,25 +59,16 @@ deleteUnusedComma {
 }
 
 cmpSwapBubble {
-    first ",#" => "#" first ",";
-    
     first "," second -> cmpShow(first "#" second);
     "#" -> ",/";
 }
 
 bubbleSort {
-    first "," array -> "/" first "," array "#";
+    first "," array -> "/" first "," array;
     scheme {
         "/" first "," second "," -> cmpSwapBubble(first "," second) ",";
     };
-    
-    array ",/" value "#" -> "/" array ",#" value;
-    
-    scheme {
-        "/" first "," second "," -> cmpSwapBubble(first "," second) ",";
-        array ",#" -> "/" array ",#";
-        "#" => "";
-    };
+    array "/" sortedArray -> bubbleSort(array) sortedArray;
 }
 
 main {
