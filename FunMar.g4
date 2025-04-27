@@ -12,7 +12,7 @@ funMarRule: sbwordi '->' sbwordo;
 
 terminalRule: sbwordi '=>' sbwordo;
 
-schm: 'scheme' '{' expStmt* '}';
+schm: 'scheme' '{' expStmt* '}' ';';
 
 sbwordi: LET? (ID LET)* ID?;
 

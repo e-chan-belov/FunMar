@@ -32,19 +32,58 @@ mal {
         "f1" -> "1";
     };
     "f" -> "";
+}
+
+cmpOperation {
+    first "#" second -> mal(first) "#" mal(second);
     scheme {
-        "1" -> "0";
+        "1#1" -> "#";
     };
 }
 
-ard {
-    array -> "#" array;
+cmpShow {
+    first "#" second -> cmpOperation(first "#" second) "/" first "#" second;
+    
+    left "1#/" first "#" second => second "#" first;
+    "1#/" first "#" second => second "#" first;
+    "#" secondMalloced "/" first "#" second => first "#" second;
+    "#/" -> "";
+}
+
+deleteUnusedComma {
+    "," -> "#,";
     scheme {
-        "#" element "," -> mal(element) ",#";
+        "#," value "," -> "," value "#,";
     };
-    "#"last -> mal(last);
+    "#," -> "";
+}
+
+cmpSwapBubble {
+    first ",#" => "#" first ",";
+    
+    first "," second -> cmpShow(first "#" second);
+    "#" -> ",/";
+}
+
+bubbleSort {
+    first "," array -> "/" first "," array "#";
+    scheme {
+        "/" first "," second "," -> cmpSwapBubble(first "," second) ",";
+    };
+    
+    array ",/" value "#" -> "/" array ",#" value;
+    
+    scheme {
+        "/" first "," second "," -> cmpSwapBubble(first "," second) ",";
+        array ",#" -> "/" array ",#";
+        "#" => "";
+    };
 }
 
 main {
-    a -> ard(a);
+    a -> a ",";
+    
+    a -> bubbleSort(a);
+    
+    a -> deleteUnusedComma(a);
 }
