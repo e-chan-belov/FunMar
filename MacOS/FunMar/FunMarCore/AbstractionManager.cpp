@@ -27,9 +27,7 @@ bool AbstractionManager::tryRealzingRule(const Rule& rule) {
         else if (iter.isVariable()) {
             var = iter.getVariable();
             if (iter.hasNext()) {
-                
                 iter.next();
-                
                 next.size = iter.getWord().size();
                 next.begin = currentWord.find(iter.getWord(), prev.begin + prev.size);
                 
@@ -45,7 +43,9 @@ bool AbstractionManager::tryRealzingRule(const Rule& rule) {
             }
             ans.size += vars[var].size() + next.size;
             prev = next;
-            
+            if (vars[var].size() == 0) {
+                return false;
+            }
         }
     }
 

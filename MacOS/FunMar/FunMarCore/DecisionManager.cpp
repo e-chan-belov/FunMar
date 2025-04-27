@@ -1,7 +1,7 @@
 #include "DecisionManager.hpp"
 #include <iostream>
 
-bool DecisionManager::terminalRuleDecision() {
+void DecisionManager::terminalRuleDecision() {
     current.flushFunctionEnv();
     current.flushScheme();
 }

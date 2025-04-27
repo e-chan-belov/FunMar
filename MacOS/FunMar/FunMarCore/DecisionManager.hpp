@@ -9,7 +9,7 @@ protected:
     Environment& current;
 
     bool killEnvDecision();
-    bool terminalRuleDecision();
+    void terminalRuleDecision();
 public:
     DecisionManager(AbstractionManager& abstractionManager_, Environment& current_) :  abstractionManager(abstractionManager_),
         current(current_) {}
