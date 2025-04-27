@@ -38,7 +38,7 @@ mal {
 }
 
 ard {
-    first "," -> "#" first ",";
+    array -> "#" array;
     scheme {
         "#" element "," -> mal(element) ",#";
     };

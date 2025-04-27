@@ -10,7 +10,7 @@ PartialAbstraction& PartialAbstraction::operator=(const PartialAbstraction& part
 }
 
 bool PartialAbstraction::moveCallFunctionIterator() {
-    if (!isActive()) {
+    if (!isCallable()) {
         callFunctionIterator = abstraction.begin();
     }
     while (callFunctionIterator.isAtList()) {

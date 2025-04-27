@@ -7,6 +7,9 @@ class DecisionManager {
 protected:
     AbstractionManager& abstractionManager;
     Environment& current;
+
+    bool killEnvDecision();
+    bool terminalRuleDecision();
 public:
     DecisionManager(AbstractionManager& abstractionManager_, Environment& current_) :  abstractionManager(abstractionManager_),
         current(current_) {}

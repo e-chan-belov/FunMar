@@ -1,6 +1,21 @@
 #include "DecisionManager.hpp"
 #include <iostream>
 
+bool DecisionManager::terminalRuleDecision() {
+    current.flushFunctionEnv();
+    current.flushScheme();
+}
+
+bool DecisionManager::killEnvDecision() {
+    if (!current.isMain()) {
+        abstractionManager.returnAnswer();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 
 bool DecisionManager::makeDecision() {
     if (current.isPartiallyAbstract()) {
@@ -11,7 +26,12 @@ bool DecisionManager::makeDecision() {
         Rule rule = current.getSchemeRule();
         bool flag = abstractionManager.tryRealzingRule(rule);
         if (flag) {
-            current.resetScheme();
+            if (rule.isTerminal()) {
+                current.flushScheme();
+            }
+            else {
+                current.resetScheme();
+            }
         }
         else {
             current.nextSchemeRule();
@@ -23,18 +43,16 @@ bool DecisionManager::makeDecision() {
             current.activateScheme();
         } else {
             Rule rule = current.getFunctionRule();
-            abstractionManager.tryRealzingRule(rule);
+            bool flag = abstractionManager.tryRealzingRule(rule);
+            if (flag && rule.isTerminal()) {
+                terminalRuleDecision();
+                return true;
+            }
         }
         current.nextFunctionRule();
         return true;
     }
     else {
-        if (!current.isMain()) {
-            abstractionManager.returnAnswer();
-            return true;
-        }
-        else {
-            return false;
-        }
+        return killEnvDecision();
     }
 }

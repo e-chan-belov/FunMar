@@ -67,22 +67,24 @@ bool AbstractionManager::tryRealzingRule(const Rule& rule) {
         }
     }
     current.getPartialAbstraction().moveCallFunctionIterator();
-    //std::cout << current.getPartialAbstraction().getFunctionIterator().getFunction().getName() << std::endl;
+
+    return true;
+}
+
+void AbstractionManager::realizeFunctionAbstraction() {
     if (current.getPartialAbstraction().isRealized()) {
         InputRealization inptreal = current.getPartialAbstraction().getInputRealization();
         Word realization = current.getPartialAbstraction().getRealization();
         current.getWord() = current.getWord().substr(0, inptreal.begin) + realization + current.getWord().substr(inptreal.begin + inptreal.size);
         current.getPartialAbstraction().dispose();
     }
-    return true;
-}
-
-void AbstractionManager::realizeFunctionAbstraction() {
-    PartialAbstraction& partial = current.getPartialAbstraction();
-    Variable FunctionName = partial.getFunctionCall().getName();
-    
-    Word word = partial.getFunctionCall().getArgument().getRealization();
-    environmentManager.fork(functions.at(FunctionName), word);
+    else {
+        PartialAbstraction& partial = current.getPartialAbstraction();
+        Variable FunctionName = partial.getFunctionCall().getName();
+        
+        Word word = partial.getFunctionCall().getArgument().getRealization();
+        environmentManager.fork(functions.at(FunctionName), word);
+    }
 }
 
 void AbstractionManager::returnAnswer() {

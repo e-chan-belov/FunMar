@@ -40,7 +40,7 @@ TEST(PartialAbstraction, after_create_is_not_callable) {
     FunctionAbstraction output = generator.generate();
     
     PartialAbstraction partial(input, output);
-    EXPECT_FALSE(partial.isActive());
+    EXPECT_FALSE(partial.isCallable());
 }
 
 TEST(PartialAbstraction, can_dispose) {
@@ -88,7 +88,6 @@ TEST(PartialAbstraction, can_dispose_correctly) { // todo before
     
     partial.realizeOneFunction((Word)"yyyy");
     
-    std::cout << partial.getFunctionAbstraction().getStringRepresentation() << std::endl;
 
     if (partial.isRealized()) {
         partial.dispose();

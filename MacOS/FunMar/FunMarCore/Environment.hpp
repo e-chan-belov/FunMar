@@ -30,7 +30,8 @@ public:
 
     PartialAbstraction& operator=(const PartialAbstraction& partial);
 
-    bool isActive() const { return callFunctionIterator.isAtList() && abstraction.size() != 0; }
+    bool isCallable() const { return callFunctionIterator.isAtList(); }
+    bool isActive() const { return abstraction.size() != 0; }
 
     FunctionAbstraction::Iterator begin() { return abstraction.begin(); }
     FunctionAbstraction::ObserverIterator begin() const { return abstraction.begin(); }
@@ -55,7 +56,7 @@ public:
 
     const FunctionAbstraction& getFunctionAbstraction() const { return abstraction; }
 
-    void dispose() { callFunctionIterator = FunctionAbstraction::Iterator(nullptr); abstraction = FunctionAbstraction(); }
+    void dispose() { callFunctionIterator = FunctionAbstraction::Iterator(); abstraction = FunctionAbstraction(); }
 };
 
 
@@ -80,6 +81,7 @@ public:
     Environment& operator=(const Environment& env);
     //Environment operator=(Environment&& env);
 
+    bool isPartiallyCallable() const { return partialAbstraction.isCallable(); }
     bool isPartiallyAbstract() const { return partialAbstraction.isActive(); }
     bool isSchemeActive() const { return schemeIterator.isAtList(); }
     bool isFunctionActive() const { return statementsIterator.isAtList(); }
@@ -87,6 +89,9 @@ public:
     void nextSchemeRule() { schemeIterator.next(); }
     void resetScheme() { schemeIterator = schemeIteratorBegin; }
     void nextFunctionRule() { statementsIterator.next(); }
+
+    void flushScheme() { schemeIterator = schemeIteratorBegin = Scheme::ObserverIterator(); }
+    void flushFunctionEnv() { statementsIterator = Statements::ObserverIterator(); }
 
     const Rule& getSchemeRule() const { return schemeIterator.getRule(); }
 

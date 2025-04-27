@@ -29,6 +29,8 @@ public:
 
     void setOutput(const FunctionAbstraction& output_) { output = output_; }
 
+    bool isTerminal() const { return terminal; }
+
     std::string getStringRepresentation() const { return input.getStringRepresentation() + (terminal ? "=>" : "->") + output.getStringRepresentation(); }
 };
 
