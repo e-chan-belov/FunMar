@@ -1,11 +1,3 @@
-deleteUnusedComma {
-    first "," -> first ",#";
-    scheme {
-        ",#" value "," -> "," value ",#";
-    };
-    ",#" => "";
-}
-
 move {
     "#" -> "a#b";
     
@@ -124,23 +116,6 @@ cmp {
     first1 "a" first2 "#" second "b" => second "#" first1 first2;
 }
 
-cmpSwapBubble {
-    first "," second -> cmp(first "#" second);
-    "#" -> ",/";
-}
-
-bubbleSort {
-    first "," array -> "/" first "," array;
-    scheme {
-        "/" first "," second "," -> cmpSwapBubble(first "," second) ",";
-    };
-    array "/" -> bubbleSort(array) ;
-}
-
 main {
-    a -> a ",";
-    
-    a -> bubbleSort(a);
-    
-    a -> deleteUnusedComma(a);
+    a -> cmp(a);
 }

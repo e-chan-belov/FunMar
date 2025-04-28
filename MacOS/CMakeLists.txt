@@ -10,24 +10,30 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-
 if (MSVC)
-    # warning level 4
     add_compile_options(/W4)
 else()
-    # additional warnings
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-include_directories(antlr4-runtime)
-link_directories(/opt/homebrew/lib)
 
-find_package(antlr4-runtime REQUIRED)
+if (NOT antlr4-runtime_FOUND)
+    if(APPLE)
+        # Для macOS
+        include_directories(antlr4-runtime)
+	link_directories(/opt/homebrew/lib)
+    elseif(UNIX)
+        # Для Linux
+        include_directories(/usr/local/include /usr/include)
+        link_directories(/usr/local/lib /usr/lib)
+    endif()
+endif()
 
-
-include_directories(FunMar/FunMarCore)
-include_directories(FunMar/FunMarAntlrTree)
-include_directories(FunMar/FunMarContainers)
+include_directories(
+    FunMar/FunMarCore
+    FunMar/FunMarAntlrTree
+    FunMar/FunMarContainers
+)
 
 add_definitions(-DFILE_PATH="${CMAKE_SOURCE_DIR}/input/main.fm")
 
@@ -53,12 +59,13 @@ add_subdirectory(test)
 
 set_target_properties(main PROPERTIES
 	XCODE_GENERATE_SCHEME TRUE
-	SCODE_SCHEME_WORKING_DIRECTORY FunMar)
-
+	XCODE_SCHEME_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/FunMar"
+)
 
 message( STATUS "")
 message( STATUS "General configuration for ${PROJECT_NAME}")
 message( STATUS "======================================")
 message( STATUS "")
 message( STATUS "   Configuration: ${CMAKE_BUILD_TYPE}")
+message( STATUS "   System: ${CMAKE_SYSTEM_NAME}")
 message( STATUS "")
