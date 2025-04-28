@@ -10,11 +10,28 @@
 
 using namespace antlr4;
 
-int main(int argc, char* argv[]) {
+Word readFileToString(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary | std::ios::ate);
+    if (!file) {
+        throw std::runtime_error("Не удалось открыть файл: " + filename);
+    }
+
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::string buffer(size, '\0');
+    if (!file.read(&buffer[0], size)) {
+        throw std::runtime_error("Ошибка чтения файла: " + filename);
+    }
+
+    return buffer;
+}
+
+int main() {
     std::ifstream stream;
-    stream.open(FILE_PATH);
+    stream.open(std::string(FILE_PATH) + "main.fm");
     if (!stream) {
-        std::cerr << "Failed to open file\n";
+        std::cerr << "Failed to open main.fm file\n";
         return 1;
     }
 
@@ -33,7 +50,7 @@ int main(int argc, char* argv[]) {
     }
     std::unordered_map<Variable, Statements> functions = visitor.compile();
     
-    std::cout<<"COMPILED!" << std::endl;
+    std::cout<<"\nCOMPILED!" << std::endl;
     
     /*Statements mal = functions[(Variable)"main"];
     Statements::ObserverIterator iter = mal.begin();
@@ -50,9 +67,18 @@ int main(int argc, char* argv[]) {
             std::cout << "}" << std::endl;
         }
     }*/
+    std::cout << "\nWould you like to enter your word or use input.txt file as a word?" << std::endl;
+    std::cout << "\nEnter 'Word' or 'File'" << std::endl;
+    std::string choice;
+    std::cin >> choice;
     Word word;
-    std::cout << "Enter your word" << std::endl;
-    std::cin >> word;
+    if (choice == "File" or choice == "file") {
+        word = readFileToString(std::string(FILE_PATH) + "input.txt");
+    }
+    else {
+        std::cout << "Enter your word" << std::endl;
+        std::cin >> word;
+    }
     Kernel kernel(functions);
     
     std::cout << "Answer:" << std::endl;

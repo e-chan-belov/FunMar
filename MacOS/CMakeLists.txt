@@ -35,7 +35,7 @@ include_directories(
     FunMar/FunMarContainers
 )
 
-add_definitions(-DFILE_PATH="${CMAKE_SOURCE_DIR}/input/main.fm")
+add_definitions(-DFILE_PATH="${CMAKE_SOURCE_DIR}/input/")
 
 set(SOURCE_FILES
     samples/main.cpp
