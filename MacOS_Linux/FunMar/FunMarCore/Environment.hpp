@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Rule.hpp"
-#include "FunMarStack.hpp"
 #include <stack>
 #include <iostream>
 
@@ -116,7 +115,7 @@ public:
 
 class EnvironmentStreams {
 protected:
-    FunMarStack<Environment> envs;
+    std::stack<Environment> envs; // temp: Я должен вернуть FunMarStack
     Environment current;
 public:
     EnvironmentStreams() = default;
