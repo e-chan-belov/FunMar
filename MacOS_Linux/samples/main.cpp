@@ -77,7 +77,8 @@ int main() {
     }
     else {
         std::cout << "Enter your word" << std::endl;
-        std::cin >> word;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::getline(std::cin, word);
     }
     Kernel kernel(functions);
     

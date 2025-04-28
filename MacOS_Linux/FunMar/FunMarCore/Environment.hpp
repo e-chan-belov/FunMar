@@ -43,6 +43,7 @@ public:
     const Function& getFunctionCall() const { return callFunctionIterator.getFunction(); }
 
     void realizeOneFunction(const Word& word) { 
+        moveCallFunctionIterator();
         callFunctionIterator.realize(word); 
         callFunctionIterator.merge();
         moveCallFunctionIterator();

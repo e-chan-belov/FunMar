@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EnvironmentManager.hpp"
+#include <unordered_map>
 
 class AbstractionManager {
 protected:

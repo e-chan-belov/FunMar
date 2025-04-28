@@ -1,0 +1,9 @@
+killWhitespacesAndEndls {
+    scheme {
+        " " -> "";
+    };
+}
+
+main {
+    a -> killWhitespacesAndEndls(a);
+}
