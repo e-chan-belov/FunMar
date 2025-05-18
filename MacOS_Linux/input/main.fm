@@ -1,146 +1,81 @@
-deleteUnusedComma {
-    first "," -> first ",#";
+inc {
+    number -> number "a";
     scheme {
-        ",#" value "," -> "," value ",#";
+        "9a" -> "a0";
+        
+        "0a" => "1";
+        "1a" => "2";
+        "2a" => "3";
+        "3a" => "4";
+        "4a" => "5";
+        "5a" => "6";
+        "6a" => "7";
+        "7a" => "8";
+        "8a" => "9";
+        
+        "a" => "1";
     };
-    ",#" => "";
 }
 
-move {
-    "#" -> "a#b";
-    
-    "9a#" -> "#";
-    "8a#" -> "#";
-    "7a#" -> "#";
-    "6a#" -> "#";
-    "5a#" -> "#";
-    "4a#" -> "#";
-    "3a#" -> "#";
-    "2a#" -> "#";
-    "1a#" -> "#";
-    "0a#" -> "#";
-    
-    "a#b" => "#";
-    
-    "#b9" => "#";
-    "#b8" => "#";
-    "#b7" => "#";
-    "#b6" => "#";
-    "#b5" => "#";
-    "#b4" => "#";
-    "#b3" => "#";
-    "#b2" => "#";
-    "#b1" => "#";
-    "#b0" => "#";
-    
-    "#b" => "#";
-}
-
-leftSizeBigger {
-    first "#" second -> first "#" second "/" first "#" second;
+dec {
+    number -> number "a";
     scheme {
-        first "#" second "/" -> move(first "#" second) "/";
+        "0a" -> "a9";
+    
+        "9a" => "8";
+        "8a" => "7";
+        "7a" => "6";
+        "6a" => "5";
+        "5a" => "4";
+        "4a" => "3";
+        "3a" => "2";
+        "2a" => "1";
+        theRest "1a" => theRest "0";
+        
+        "1a" => "";
+        "a" => "";
     };
-    trash "#/" first "#" second => "no" second "#" first;
-    "#" trash "/" => "no";
-    "#/" => "yes";
 }
 
+addFour {
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+}
 
-cmp {
-    set -> leftSizeBigger(set);
-    "no" => "";
-    "yes" -> "";
-    
-    first "#" -> "a" first "#b";
+addEight {
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+}
+
+intArraySize {
     scheme {
-        "a9" first "b9" -> "9a" first "9b";
-        "a8" first "b8" -> "8a" first "8b";
-        "a7" first "b7" -> "7a" first "7b";
-        "a6" first "b6" -> "6a" first "6b";
-        "a5" first "b5" -> "5a" first "5b";
-        "a4" first "b4" -> "4a" first "4b";
-        "a3" first "b3" -> "3a" first "3b";
-        "a2" first "b2" -> "2a" first "2b";
-        "a1" first "b1" -> "1a" first "1b";
-        "a0" first "b0" -> "0a" first "0b";
+        number "#" size -> addFour(number) "#" dec(size);
     };
-    first "a#" second "b" => first "#" second;
-    
-    "a" theRest "b9" => theRest "9";
-    first1 "a9" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "9" first2;
-    first "a9#" second "b" lastDigit => second lastDigit "#" first "9";
-    "a9#b" second => second "#9";
-    "a9" first "#b" second => second "#9" first;
-    
-    "a" theRest "b8" => theRest "8";
-    first1 "a8" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "8" first2;
-    first "a8#" second "b" lastDigit => second lastDigit "#" first "8";
-    "a8#b" second => second "#8";
-    "a8" first "#b" second => second "#8" first;
-    
-    "a" theRest "b7" => theRest "7";
-    first1 "a7" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "7" first2;
-    first "a7#" second "b" lastDigit => second lastDigit "#" first "7";
-    "a7#b" second => second "#7";
-    "a7" first "#b" second => second "#7" first;
-    
-    "a" theRest "b6" => theRest "6";
-    first1 "a6" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "6" first2;
-    first "a6#" second "b" lastDigit => second lastDigit "#" first "6";
-    "a6#b" second => second "#6";
-    "a6" first "#b" second => second "#6" first;
-    
-    "a" theRest "b5" => theRest "5";
-    first1 "a5" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "5" first2;
-    first "a5#" second "b" lastDigit => second lastDigit "#" first "5";
-    "a5#b" second => second "#5";
-    "a5" first "#b" second => second "#5" first;
-    
-    "a" theRest "b4" => theRest "4";
-    first1 "a4" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "4" first2;
-    first "a4#" second "b" lastDigit => second lastDigit "#" first "4";
-    "a4#b" second => second "#4";
-    "a4" first "#b" second => second "#4" first;
-    
-    "a" theRest "b3" => theRest "3";
-    first1 "a3" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "3" first2;
-    first "a3#" second "b" lastDigit => second lastDigit "#" first "3";
-    "a3#b" second => second "#3";
-    "a3" first "#b" second => second "#3" first;
-    
-    "a" theRest "b2" => theRest "2";
-    first1 "a2" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "2" first2;
-    first "a2#" second "b" lastDigit => second lastDigit "#" first "2";
-    "a2#b" second => second "#2";
-    "a2" first "#b" second => second "#2" first;
-    
-    "a" theRest "b1" => theRest "1";
-    first1 "a1" first2 "#" second1 "b" second2 => second1 second2 "#" first1 "1" first2;
-    first "a1#" second "b0" => second "0#" first "1";
-    "a1#b0" => "0#1";
-    "a1" first "#b" second => second "#1" first;
-    
-    first1 "a" first2 "#" second "b" => second "#" first1 first2;
 }
 
-cmpSwapBubble {
-    first "," second -> cmp(first "#" second);
-    "#" -> ",/";
-}
-
-bubbleSort {
-    first "," array -> "/" first "," array;
+memoryMap {
+    program -> "#0#" program " ";
     scheme {
-        "/" first "," second "," -> cmpSwapBubble(first "," second) ",";
+        "#" number "#" pointerType "* " var " = " value "; " -> "#" addEight(number) "#";
+        
+        "#" number "#int[" size "]" var " = " array "; " -> "#" intArraySize(number "#" size) "#";
+        
+        "#" number "#int " var " = " value "; " -> "#" addFour(number) "#";
+        "#" number "#double " var " = " value "; " -> "#" addEight(number) "#";
     };
-    array "/" -> bubbleSort(array) ;
+    "#" number "#" -> number;
 }
+
+
 
 main {
-    a -> a ",";
-    
-    a -> bubbleSort(a);
-    
-    a -> deleteUnusedComma(a);
+    a -> dec(a);
 }
