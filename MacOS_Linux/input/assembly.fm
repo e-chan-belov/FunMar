@@ -1,0 +1,81 @@
+inc {
+    number -> number "a";
+    scheme {
+        "9a" -> "a0";
+        
+        "0a" => "1";
+        "1a" => "2";
+        "2a" => "3";
+        "3a" => "4";
+        "4a" => "5";
+        "5a" => "6";
+        "6a" => "7";
+        "7a" => "8";
+        "8a" => "9";
+        
+        "a" => "1";
+    };
+}
+
+dec {
+    number -> number "a";
+    scheme {
+        "0a" -> "a9";
+    
+        "9a" => "8";
+        "8a" => "7";
+        "7a" => "6";
+        "6a" => "5";
+        "5a" => "4";
+        "4a" => "3";
+        "3a" => "2";
+        "2a" => "1";
+        theRest "1a" => theRest "0";
+        
+        "1a" => "";
+        "a" => "";
+    };
+}
+
+addFour {
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+}
+
+addEight {
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+    number -> inc(number);
+}
+
+intArraySize {
+    scheme {
+        number "#" size -> addFour(number) "#" dec(size);
+    };
+}
+
+memoryMap {
+    program -> "#0#" program " ";
+    scheme {
+        "#" number "#" pointerType "* " var " = " value "; " -> "#" addEight(number) "#";
+        
+        "#" number "#int[" size "]" var " = " array "; " -> "#" intArraySize(number "#" size) "#";
+        
+        "#" number "#int " var " = " value "; " -> "#" addFour(number) "#";
+        "#" number "#double " var " = " value "; " -> "#" addEight(number) "#";
+    };
+    "#" number "#" -> number;
+}
+
+
+
+main {
+    a -> dec(a);
+}
